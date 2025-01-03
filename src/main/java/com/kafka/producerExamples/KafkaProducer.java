@@ -1,11 +1,11 @@
-package com.kafka;
+package com.kafka.producerExamples;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-@Service
+//@Service
 public class KafkaProducer {
 
 	private int counter=0;
