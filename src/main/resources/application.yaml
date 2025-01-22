@@ -3,10 +3,27 @@ logging:
     console: "[Kafka Core Consumer] %clr(%d{HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:%5p}) %clr(---){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %clr(%t){magenta} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
 
 spring:
-    application:
-        name: Kafka-Producer
-    main:
-        banner-mode: off
-        log-startup-info: false
-    jackson:
-      date-format: yyyy-MM-dd
+  application:
+    name: Kafka-Producer
+  main:
+    banner-mode: off
+    log-startup-info: false
+  jackson:
+    date-format: yyyy-MM-dd
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092 # Define los brokers Kafka
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        linger:
+          ms: 10000      # Espera 5 ms antes de enviar un lote.
+        batch:
+          size: 16384 # Cada lote puede tener hasta 16 KB.
+        enable:
+          idempotence: true # Habilitar idempotencia
+        compression:
+          type: gzip #Offers good compression but spends several cpu resources
+#         type: snappy Fater but its compression is not so good than gzip
+#         type: lz4 Similar thant snoppy but more efficient 
+#         type: sztd  Fast and excelent compression level. Ideal for masive volum data.
